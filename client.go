@@ -26,7 +26,7 @@ func main(){
 	var port string
 	var hash int
 	if(len(os.Args)==1){
-		log.Println("Not enough arguments")
+		log.Println("Check Arguments")
 		os.Exit(1)
 	}
 
@@ -55,7 +55,7 @@ func main(){
 		}else {
 			port = "3002"
 		}
-		
+
 		url := fmt.Sprintf("http://localhost:%s/keys/%s",port,key[2])
 		keyg, err := http.Get(url)
 		if err != nil {
