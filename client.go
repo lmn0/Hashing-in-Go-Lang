@@ -41,10 +41,13 @@ func main(){
 		get.Body.Close()
 		log.Println("Pairs: ", string(data))
 	}else if os.Args[1]== "GET" {
-		request_string := os.Args[2]
-		key := strings.Split(request_string,"/")
-		key_integer,_ := strconv.Atoi(key[2])
-		hash = key_integer % 3
+		reqstr := os.Args[2]
+
+		key := strings.Split(reqstr,"/")
+		tempKey,_ := strconv.Atoi(key[2])
+
+		hash = tempKey % 3
+
 		if(hash == 0){
 			port = "3000"
 		}else if(hash == 1){
@@ -52,13 +55,14 @@ func main(){
 		}else {
 			port = "3002"
 		}
+		
 		url := fmt.Sprintf("http://localhost:%s/keys/%s",port,key[2])
-		get_key, err := http.Get(url)
+		keyg, err := http.Get(url)
 		if err != nil {
 			log.Fatal(err)
 		}	
-		data, err := ioutil.ReadAll(get_key.Body)
-		get_key.Body.Close()
+		data, err := ioutil.ReadAll(keyg.Body)
+		keyg.Body.Close()
 		log.Println("Pairs: ", string(data))
 	}else{
 		req_string := os.Args[2]
